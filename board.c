@@ -1,10 +1,6 @@
-//
-// Created by Tom on 06.12.2024.
-//
-
+#include <stdlib.h>
 #include "board.h"
 
-#include <stdlib.h>
 
 void setRandomEmtpyPos(int* board, const int size, const int val) {
     int row, col, *chosenPlace;
@@ -28,43 +24,12 @@ void addRandomTile(int* board, int size) {
     setRandomEmtpyPos(board, size, chosenNumber);
 }
 
-
-void initBoard(int* board, int size) {
-    const int initNumbersCount = 2;
-
-    for (int i = 0; i < initNumbersCount; i++) {
-        addRandomTile(board, size);
-    }
-}
-
 void resetBoard(int* board, const int size) {
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
             *(board++) = 0;
         }
     }
-}
-
-int hasValidRightMoves(const int *board, const int size) {
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size-1; j++) {
-            if (*board == *(++board) || *(board) == 0) {
-                return 1;
-            }
-        }
-    }
-    return 0;
-}
-
-int hasValidLeftMoves(const int *board, const int size) {
-    for (int i = 0; i < size; i++) {
-        for (int j = 1; j < size; j++) {
-            if ((*(board-1) == 0 && *board != 0) || (*(board-1) == *(board++))) {
-                return 1;
-            }
-        }
-    }
-    return 0;
 }
 
 // int hasValidVerticalMoves()

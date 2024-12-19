@@ -3,4 +3,4 @@
 
 int handleMove(char choice, int* board, int size, int *score);
 
-#endif //MOVE_H
+#endif

@@ -1,9 +1,5 @@
 #include <stdio.h>
 #include "game.h"
-
-#include <ctype.h>
-#include <stdlib.h>
-
 #include "displayGame.h"
 #include "board.h"
 #include "move.h"
