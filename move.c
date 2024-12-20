@@ -71,7 +71,6 @@ int pushAllLines(int* board, const int size, int* score, const int direction) {
     return tiles_moved;
 }
 
-
 int handleMove(const char choice, int* board, const int size, int* score) {
     int tiles_moved = 0;
 
