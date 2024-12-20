@@ -78,7 +78,8 @@ void playGame(int* board, int size, int scoreToWin) {
         has_valid_moves = hasValidMoves(board, size);
     }
 
-    displayBoard(board, size, best, score);
+    if (gameState != -1)
+        displayBoard(board, size, best, score);
 
     if (!has_valid_moves)
         printf("Game over your score is %d\n", score);
