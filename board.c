@@ -13,13 +13,13 @@ void setRandomEmtpyPos(int* board, const int size, const int val) {
     *(chosenPlace) = val;
 }
 
-void addRandomTile(int* board, int size) {
+void addRandomTile(int* board, const int size) {
     const int initialNumberProbability = 70;
     const int rareNum = 4;
     const int commonNum = 2;
 
     const int randomValue = rand() % 100;
-    int chosenNumber = (randomValue <= initialNumberProbability) ? commonNum : rareNum;
+    const int chosenNumber = (randomValue <= initialNumberProbability) ? commonNum : rareNum;
 
     setRandomEmtpyPos(board, size, chosenNumber);
 }
@@ -31,8 +31,6 @@ void resetBoard(int* board, const int size) {
         }
     }
 }
-
-// int hasValidVerticalMoves()
 
 int hasValidMoves(const int *board, const int size) {
     for (int i = 0; i < size; i++) {
