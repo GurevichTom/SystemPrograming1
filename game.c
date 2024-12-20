@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include "game.h"
+
+#include <ctype.h>
+
 #include "displayGame.h"
 #include "board.h"
 #include "move.h"
@@ -55,7 +58,7 @@ char displayMainMenu() {
     char userChoice;
     scanf(" %c", &userChoice);
 
-    return userChoice;
+    return tolower(userChoice);
 }
 
 void playGame(int* board, int size, int scoreToWin) {
