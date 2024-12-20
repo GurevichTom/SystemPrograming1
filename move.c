@@ -2,10 +2,10 @@
 #include "move.h"
 
 // directions:
-#define RIGHT 1
-#define LEFT -1
-#define UP    1
-#define DOWN -1
+#define RIGHT 1      // Move one cell to the right
+#define LEFT (-1)      // Move one cell to the left
+#define DOWN (size)  // Move one row down (i.e., +size cells)
+#define UP (-size)    // Move one row up (i.e., -size cells)
 
 void moveAndMerge(int** writePos, const int* startPos, int* current, const int direction, int* tiles_moved, int* score, int* mergeOccurred) {
     if (*current == 0)
@@ -31,19 +31,37 @@ void moveAndMerge(int** writePos, const int* startPos, int* current, const int d
     }
 }
 
+int* getStartPos(int* board, const int size, const int i, const int direction) {
+    // Horizontal directions
+    if (direction == LEFT) {
+        return board + i * size;
+    }
 
+    if (direction == RIGHT) {
+        return board + i * size + (size - 1);
+    }
 
+    // Vertical directions
+    if (direction == UP) {
+        return board + i;
+    }
 
-int pushHorizontal(int* board, const int size, int* score, const int direction) {
+    return board + i + size * (size - 1);
+
+}
+
+int pushAllLines(int* board, const int size, int* score, const int direction) {
     int tiles_moved = 0;
 
+    // Process all lines:
+    // For horizontal (LEFT/RIGHT), a "line" is a row.
+    // For vertical (UP/DOWN), a "line" is a column.
     for (int i = 0; i < size; i++) {
-        int* startPos = board + i * size;
-        startPos = (direction == RIGHT) ? startPos + size - 1 : startPos;
+        int* startPos = getStartPos(board, size, i, direction);
+        int mergeOccurred = 0;
         int* writePos = startPos;
 
-        int mergeOccurred = 0;
-
+        // Iterate through this line's cells
         for (int j = 0; j < size; j++) {
             int* current = startPos - j * direction;
             moveAndMerge(&writePos, startPos, current, direction, &tiles_moved, score, &mergeOccurred);
@@ -53,63 +71,15 @@ int pushHorizontal(int* board, const int size, int* score, const int direction) 
     return tiles_moved;
 }
 
-int pushLeft(int* board, const int size, int *score) {
-    return pushHorizontal(board, size, score, LEFT);
-}
 
-int pushRight(int* board, const int size, int *score) {
-    return pushHorizontal(board, size, score, RIGHT);
-}
-
-int pushVertical(int* board, const int size, int* score, const int direction) {
-    int tiles_moved = 0;
-
-    for (int i = 0; i < size; i++) {
-        int* startPos = board + i;
-        startPos = (direction == UP) ? startPos : startPos + size * (size - 1);
-        int* writePos = startPos;
-
-        int mergeOccurred = 0;
-
-        for (int j = 0; j < size; j++) {
-            int* current = startPos + j * size * direction;
-            moveAndMerge(&writePos, startPos, current, -size * direction, &tiles_moved, score, &mergeOccurred);
-        }
-    }
-
-    return tiles_moved;
-}
-
-int pushUp(int* board, const int size, int *score) {
-    return pushVertical(board, size, score, UP);
-}
-
-int pushDown(int *board, const int size, int *score) {
-    return pushVertical(board, size, score, DOWN);
-}
-
-
-
-int handleMove(const char choice, int* board, const int size, int *score) {
+int handleMove(const char choice, int* board, const int size, int* score) {
     int tiles_moved = 0;
 
     switch (choice) {
-        case 'l':
-            tiles_moved = pushLeft(board, size, score);
-            break;
-
-        case 'r':
-            tiles_moved = pushRight(board, size, score);
-            break;
-
-        case 'u':
-            tiles_moved = pushUp(board, size, score);
-            break;
-
-        case 'd':
-            tiles_moved = pushDown(board, size, score);
-            break;
-
+        case 'l': tiles_moved = pushAllLines(board, size, score, LEFT); break;
+        case 'r': tiles_moved = pushAllLines(board, size, score, RIGHT); break;
+        case 'u': tiles_moved = pushAllLines(board, size, score, UP); break;
+        case 'd': tiles_moved = pushAllLines(board, size, score, DOWN); break;
         default:
             printf("Invalid move direction.\n");
         return 0;
@@ -121,3 +91,4 @@ int handleMove(const char choice, int* board, const int size, int *score) {
 
     return tiles_moved;
 }
+
