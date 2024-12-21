@@ -79,13 +79,12 @@ void playGame(int* board, int size, int scoreToWin) {
     int has_valid_moves = 1;
 
      while (score < scoreToWin && has_valid_moves && gameState != STOPPED) {
-        if (gameState != NOT_INITIALIZED)
-            displayScore(best, score);
-
          // If a move has been made (or at the start), show the board
-        if (tiles_moved)
+        if (tiles_moved) {
+            if (gameState != NOT_INITIALIZED)
+                displayScore(best, score);
             displayBoard(board, size, best, score);
-
+        }
          // Get user choice and run the corresponding function
         const char choice = displayMainMenu();
         tiles_moved = runFunction(choice, board, size, &gameState, &score, best, scoreToWin);
