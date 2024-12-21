@@ -79,6 +79,9 @@ void playGame(int* board, int size, int scoreToWin) {
     int has_valid_moves = 1;
 
      while (score < scoreToWin && has_valid_moves && gameState != STOPPED) {
+        if (gameState != NOT_INITIALIZED)
+            displayScore(best, score);
+
          // If a move has been made (or at the start), show the board
         if (tiles_moved)
             displayBoard(board, size, best, score);

@@ -47,7 +47,6 @@ void displayRow(const int* row, const int size) {
 }
 
 void displayBoard(const int* board, const int size, const int best, const int score) {
-    displayScore(best, score);
     for (int i = 0; i < size * size; i += size) {
         displayRowDelimiter(size);
         displayRow(board+i, size);
