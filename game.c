@@ -75,25 +75,34 @@ void playGame(int* board, int size, int scoreToWin) {
     int best = 0;
     int score = 0;
     int gameState = NOT_INITIALIZED;
-    int tiles_moved = 1;
+    int tiles_moved = 1; // Start as 1 to ensure initial display
     int has_valid_moves = 1;
 
      while (score < scoreToWin && has_valid_moves && gameState != STOPPED) {
+         // If a move has been made (or at the start), show the board
         if (tiles_moved)
             displayBoard(board, size, best, score);
+
+         // Get user choice and run the corresponding function
         const char choice = displayMainMenu();
         tiles_moved = runFunction(choice, board, size, &gameState, &score, best, scoreToWin);
+
+        // Update best score if needed
         best = score > best ? score : best;
 
+         // If tiles were moved this turn, add a random new tile
         if (tiles_moved)
             addRandomTile(board, size);
 
+        // Check if any moves remain
         has_valid_moves = hasValidMoves(board, size);
     }
 
+    // Show the final board state unless the user exited
     if (gameState != STOPPED)
         displayBoard(board, size, best, score);
 
+    // Print endgame result
     if (!has_valid_moves)
         printf("Game over your score is %d\n", score);
     else if (score >= scoreToWin)
