@@ -11,10 +11,11 @@
 #define STOPPED        -1
 
 void initGame(int* board, const int boardSize, int *gameState, int scoreToWin, int *score) {
-    resetBoard(board, boardSize);
-    addRandomTile(board, boardSize);
-    *gameState = RUNNING;
+    
     *score = 0;
+    resetBoard(board, boardSize);
+    addRandomTile(board, boardSize, score);
+    *gameState = RUNNING;
     printStartMessage(scoreToWin);
 }
 
@@ -79,23 +80,24 @@ void playGame(int* board, int size, int scoreToWin) {
     int has_valid_moves = 1;
 
      while (score < scoreToWin && has_valid_moves && gameState != STOPPED) {
-         // If a move has been made (or at the start), show the board
-        if (tiles_moved)
-            displayBoard(board, size, best, score);
-
+        
          // Get user choice and run the corresponding function
         const char choice = displayMainMenu();
         tiles_moved = runFunction(choice, board, size, &gameState, &score, best, scoreToWin);
-
-        // Update best score if needed
-        best = score > best ? score : best;
-
          // If tiles were moved this turn, add a random new tile
+        if (tiles_moved){
+            addRandomTile(board, size, &score);
+        }
+            
+        // Update best score if needed
+        best = (score > best) ? score : best;
+	printf("Best: %d\n", best);
+	// If a move has been made (or at the start), show the board
         if (tiles_moved)
-            addRandomTile(board, size);
-
+            displayBoard(board, size, best, score);
         // Check if any moves remain
         has_valid_moves = hasValidMoves(board, size);
+        
     }
 
     // Show the final board state unless the user exited

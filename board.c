@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "board.h"
 
+#include <stdio.h>
 
 void setRandomEmtpyPos(int* board, const int size, const int val) {
     int row, col, *chosenPlace;
@@ -13,15 +14,18 @@ void setRandomEmtpyPos(int* board, const int size, const int val) {
     *(chosenPlace) = val;
 }
 
-void addRandomTile(int* board, const int size) {
+void addRandomTile(int* board, const int size, int* score) {
     const int initialNumberProbability = 70;
     const int rareNum = 4;
     const int commonNum = 2;
 
     const int randomValue = rand() % 100;
     const int chosenNumber = (randomValue <= initialNumberProbability) ? commonNum : rareNum;
+    
+    *score = chosenNumber > *score ? chosenNumber : *score;
 
     setRandomEmtpyPos(board, size, chosenNumber);
+    
 }
 
 void resetBoard(int* board, const int size) {
