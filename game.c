@@ -11,10 +11,10 @@
 #define STOPPED        -1
 
 void initGame(int* board, const int boardSize, int *gameState, int scoreToWin, int *score) {
-    resetBoard(board, boardSize);
-    addRandomTile(board, boardSize);
-    *gameState = RUNNING;
     *score = 0;
+    resetBoard(board, boardSize);
+    addRandomTile(board, boardSize, score);
+    *gameState = RUNNING;
     printStartMessage(scoreToWin);
 }
 
@@ -87,12 +87,12 @@ void playGame(int* board, int size, int scoreToWin) {
         const char choice = displayMainMenu();
         tiles_moved = runFunction(choice, board, size, &gameState, &score, best, scoreToWin);
 
-        // Update best score if needed
-        best = score > best ? score : best;
-
          // If tiles were moved this turn, add a random new tile
         if (tiles_moved)
-            addRandomTile(board, size);
+            addRandomTile(board, size, &score);
+
+        // Update best score if needed
+        best = score > best ? score : best;
 
         // Check if any moves remain
         has_valid_moves = hasValidMoves(board, size);

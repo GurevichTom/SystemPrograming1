@@ -13,7 +13,7 @@ void setRandomEmtpyPos(int* board, const int size, const int val) {
     *(chosenPlace) = val;
 }
 
-void addRandomTile(int* board, const int size) {
+void addRandomTile(int* board, const int size, int *score) {
     const int initialNumberProbability = 70;
     const int rareNum = 4;
     const int commonNum = 2;
@@ -22,6 +22,8 @@ void addRandomTile(int* board, const int size) {
     const int chosenNumber = (randomValue <= initialNumberProbability) ? commonNum : rareNum;
 
     setRandomEmtpyPos(board, size, chosenNumber);
+
+    *score = chosenNumber > *score ? chosenNumber : *score;
 }
 
 void resetBoard(int* board, const int size) {

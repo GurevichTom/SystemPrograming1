@@ -19,7 +19,7 @@ void moveAndMerge(int** writePos, const int* startPos, int* current, const int d
         *current = 0;
         *mergeOccurred = 1; // Prevent more than one merge in line
         *tiles_moved = 1;
-        *score += *prevPos;
+        *score = *prevPos > *score ? *prevPos : *score;
     } else {
         // Push value to the next writing position
         if (current != *writePos) {
