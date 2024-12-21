@@ -58,12 +58,12 @@ char displayMainMenu() {
     
     printf("\n\nPlease choose one of the following options:\n");
     
-    printf("N/n New Game\n");
-    printf("R/r Move Right\n");
-    printf("L/l Move Left\n");
-    printf("U/u Move Up\n");
-    printf("D/d Move down\n");
-    printf("E/e Exit\n");
+    printf("N/n - New Game\n");
+    printf("R/r - Move Right\n");
+    printf("L/l - Move Left\n");
+    printf("U/u - Move Up\n");
+    printf("D/d - Move down\n");
+    printf("E/e - Exit\n");
 
     char userChoice;
     scanf(" %c", &userChoice);

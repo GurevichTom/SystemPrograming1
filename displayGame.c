@@ -2,10 +2,10 @@
 #include "displayGame.h"
 
 void displayRowDelimiter(const int size) {
-    const int delimiter_lines_per_element = 6;
+    const int delimiter_lines_per_element = 7;
     const char row_delimiter = '-';
 
-    for (int i = 0; i <= delimiter_lines_per_element * size ; i++) {
+    for (int i = 0; i < delimiter_lines_per_element * size + 1; i++) {
         printf("%c", row_delimiter);
     }
     printf("\n");
@@ -29,7 +29,7 @@ void displayScore(const int best, const int score) {
 
 void displayRow(const int* row, const int size) {
     const char colDelimiter = '|';
-    const int leftPadding = 4;
+    const int leftPadding = 5;
     const int rightPadding = 1;
 
     for (int i = 0; i < size; i++) {
